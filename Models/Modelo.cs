@@ -37,6 +37,7 @@ namespace E_commerce.Models
     {
         public Cadastro()
         {
+
         }
 
         public virtual Pedido Pedido { get; set; }
@@ -62,6 +63,11 @@ namespace E_commerce.Models
 
     public class ItemPedido : BaseModel
     {
+        public ItemPedido()
+        {
+
+        }
+
         [Required]
         public Pedido Pedido { get; private set; }
         [Required]
@@ -70,11 +76,6 @@ namespace E_commerce.Models
         public int Quantidade { get; private set; }
         [Required]
         public decimal PrecoUnitario { get; private set; }
-
-        public ItemPedido()
-        {
-
-        }
 
         public ItemPedido(Pedido pedido, Produto produto, int quantidade, decimal precoUnitario)
         {

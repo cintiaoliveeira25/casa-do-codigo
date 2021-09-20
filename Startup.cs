@@ -26,6 +26,9 @@ namespace E_commerce
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+
+            services.AddControllersWithViews();
             services.AddDistributedMemoryCache();
             services.AddSession();
 

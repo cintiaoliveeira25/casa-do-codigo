@@ -39,8 +39,13 @@ namespace E_commerce.Controllers
 
         public IActionResult Resumo()
         {
-            Pedido pedido = pedidoRepository.GetPedido();
-            return View(pedido);
+            return View(pedidoRepository.GetPedido();
+        }
+
+        [HttpPost]
+        public void UpdateQuantidaded([FromBody]ItemPedido itemPedido)
+        {
+
         }
 
     }

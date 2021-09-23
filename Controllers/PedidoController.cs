@@ -8,12 +8,14 @@ namespace E_commerce.Controllers
     {
         private readonly IProdutoRepository produtoRepository;
         private readonly IPedidoRepository pedidoRepository;
+        private readonly IItemPedidoRepository itemPedidoRepository;
 
         public PedidoController(IProdutoRepository produtoRepository,
-            IPedidoRepository pedidoRepository)
+            IPedidoRepository pedidoRepository, IItemPedidoRepository itemPedidoRepository)
         {
             this.produtoRepository = produtoRepository;
             this.pedidoRepository = pedidoRepository;
+            this.itemPedidoRepository = itemPedidoRepository;
         }
 
         public IActionResult Carrossel()
@@ -39,13 +41,13 @@ namespace E_commerce.Controllers
 
         public IActionResult Resumo()
         {
-            return View(pedidoRepository.GetPedido();
+            return View(pedidoRepository.GetPedido());
         }
 
         [HttpPost]
         public void UpdateQuantidaded([FromBody]ItemPedido itemPedido)
         {
-
+            itemPedidoRepository.UpdateQuantidade(itemPedido);
         }
 
     }

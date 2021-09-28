@@ -1,6 +1,8 @@
 ﻿using E_commerce.Models;
+using E_commerce.Models.ViewModel;
 using E_commerce.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace E_commerce.Controllers
 {
@@ -30,8 +32,9 @@ namespace E_commerce.Controllers
                 pedidoRepository.AddItem(codigo);
             }
 
-            Pedido pedido = pedidoRepository.GetPedido();
-            return View(pedido.Itens);
+            List<ItemPedido> itens = pedidoRepository.GetPedido().Itens;
+            CarrinhoViewModel carrinhoViewModel = new CarrinhoViewModel(itens);
+            return base.View(carrinhoViewModel);
         }
 
         public IActionResult Cadastro()
@@ -45,9 +48,9 @@ namespace E_commerce.Controllers
         }
 
         [HttpPost]
-        public void UpdateQuantidaded([FromBody]ItemPedido itemPedido)
+        public UpdateQuantidadeResponse UpdateQuantidade([FromBody]ItemPedido itemPedido)
         {
-            itemPedidoRepository.UpdateQuantidade(itemPedido);
+            return pedidoRepository.UpdateQuantidade(itemPedido);
         }
 
     }

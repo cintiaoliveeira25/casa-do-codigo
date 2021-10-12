@@ -1,5 +1,6 @@
 ﻿using E_commerce.Context;
 using E_commerce.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace E_commerce.Repositories
 {
     public interface IItemPedidoRepository
     {
-        ItemPedido GetItemPedido(int itemPedidoId);
-        void RemoveItemPedido(int itemPedidoId);
+        Task<ItemPedido> GetItemPedido(int itemPedidoId);
+        Task RemoveItemPedido(int itemPedidoId);
     }
 
     public class ItemPedidoRepository : BaseRepository<ItemPedido>, IItemPedidoRepository
@@ -19,15 +20,17 @@ namespace E_commerce.Repositories
         {
         }
 
-        public ItemPedido GetItemPedido(int itemPedidoId)
+        public async Task<ItemPedido> GetItemPedido(int itemPedidoId)
         {
-            return dbSet.Where(ip => ip.Id == itemPedidoId).SingleOrDefault();
+            return
+                await dbSet
+                .Where(ip => ip.Id == itemPedidoId)
+                .SingleOrDefaultAsync();
         }
 
-        public void RemoveItemPedido(int itemPedidoId)
+        public async Task RemoveItemPedido(int itemPedidoId)
         {
-            dbSet.Remove(GetItemPedido(itemPedidoId));
-            GetItemPedido(itemPedidoId);
+            dbSet.Remove(await GetItemPedido(itemPedidoId));
         }
     }
 }

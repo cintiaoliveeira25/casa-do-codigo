@@ -26,17 +26,20 @@ namespace E_commerce
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry();
             services.AddControllersWithViews().AddNewtonsoftJson();
 
-            services.AddControllersWithViews();
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.CheckConsentNeeded = context => false;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+            services.AddMvc();
             services.AddDistributedMemoryCache();
             services.AddSession();
 
             services.AddDbContext<ApplicationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllersWithViews();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IDataService, DataService>();
@@ -73,7 +76,7 @@ namespace E_commerce
                     pattern: "{controller=Pedido}/{action=Carrossel}/{codigo?}");
             });
 
-            serviceProvider.GetService<IDataService>().InicializaDB();
+            serviceProvider.GetService<IDataService>().InicializaDB().Wait();
         }
     }
 }

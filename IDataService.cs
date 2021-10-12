@@ -1,7 +1,9 @@
-﻿namespace E_commerce
+﻿using System.Threading.Tasks;
+
+namespace E_commerce
 {
     interface IDataService
     {
-        void InicializaDB();
+        Task InicializaDB();
     }
 }

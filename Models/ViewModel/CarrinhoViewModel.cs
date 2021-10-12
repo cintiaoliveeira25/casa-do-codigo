@@ -12,7 +12,7 @@ namespace E_commerce.Models.ViewModel
             Itens = itens;
         }
 
-        public IList<ItemPedido> Itens { get;  }
+        public IList<ItemPedido> Itens { get; }
 
         public decimal Total => Itens.Sum(i => i.Quantidade * i.PrecoUnitario);
     }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace E_commerce.Models
 {
@@ -80,11 +82,6 @@ namespace E_commerce.Models
     [DataContract]
     public class ItemPedido : BaseModel
     {
-        public ItemPedido()
-        {
-
-        }
-
         [Required]
         [DataMember]
         public Pedido Pedido { get; private set; }
@@ -99,6 +96,11 @@ namespace E_commerce.Models
         public decimal PrecoUnitario { get; private set; }
         [DataMember]
         public decimal Subtotal => Quantidade * PrecoUnitario;
+
+        public ItemPedido()
+        {
+
+        }
 
         public ItemPedido(Pedido pedido, Produto produto, int quantidade, decimal precoUnitario)
         {

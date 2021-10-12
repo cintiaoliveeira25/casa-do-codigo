@@ -5,37 +5,37 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace E_commerce
 {
-   class DataService : IDataService
+    class DataService : IDataService
     {
         private readonly ApplicationContext contexto;
         private readonly IProdutoRepository produtoRepository;
 
-        public DataService(ApplicationContext contexto, IProdutoRepository produtoRepository)
+        public DataService(ApplicationContext contexto,
+            IProdutoRepository produtoRepository)
         {
             this.contexto = contexto;
             this.produtoRepository = produtoRepository;
         }
 
-        public void InicializaDB()
+        public async Task InicializaDB()
         {
-            contexto.Database.Migrate();
+            await contexto.Database.MigrateAsync();
 
-            List<Livro> livros = GetLivros();
-            produtoRepository.SaveProdutos(livros);
+            List<Livro> livros = await GetLivros();
+
+            await produtoRepository.SaveProdutos(livros);
         }
 
-      
-
-        private static List<Livro> GetLivros()
+        private static async Task<List<Livro>> GetLivros()
         {
-            var json = File.ReadAllText("livros.json");
+            var json = await File.ReadAllTextAsync("livros.json");
             var livros = JsonConvert.DeserializeObject<List<Livro>>(json);
             return livros;
         }
     }
 
-    
 }
